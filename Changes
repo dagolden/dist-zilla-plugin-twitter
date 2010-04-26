@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+0.004     2010-04-26 17:12:38 EST5EDT
+
     - don't index sample distributin for testing
 
 0.003     2010-04-26 00:26:26 EST5EDT
