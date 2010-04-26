@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+0.003     2010-04-26 00:26:26 EST5EDT
+
     - no changes -- releasing to test the new URL
 
 0.002     2010-04-26 00:19:42 EST5EDT
