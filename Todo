@@ -1,5 +1,4 @@
-Revision history for Dist-Zilla-Plugin-Twitter
+Stuff todo:
 
-- Write some code
-- Write some tests
-- Replace boilerplate docs with real documentation
+* fork a process and delay the tweet until the URL goes live
+
