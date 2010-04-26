@@ -2,7 +2,7 @@ use 5.008;
 use strict;
 use warnings;
 package Dist::Zilla::Plugin::Twitter;
-# ABSTRACT: a module for CPAN
+# ABSTRACT: Twitter when you release with Dist::Zilla
 
 use Carp qw/confess/;
 use Moose 0.99;
@@ -81,27 +81,39 @@ __END__
 
 = SYNOPSIS
 
-  use Dist::Zilla::Plugin::Twitter;
+In your {dist.ini}:
 
-= DESCRIPTION
+  [Twitter]
 
-This module might be cool, but you'd never know it from the lack
-of documentation.
+In your {.netrc}:
 
-= USAGE
-
-Good luck!
-
-== Configuration
-
-   # in .netrc
    machine api.twitter.com
      login YOUR_TWITTER_USER_NAME
      password YOUR_TWITTER_PASSWORD
 
-= SEE ALSO
+= DESCRIPTION
 
-Maybe other modules do related things.
+This plugin will use [Net::Twitter] with the login and password in
+your {.netrc} file to send a release notice to Twitter.
+
+The default configuration is as follows:
+
+  [Twitter]
+  tweet_url = http://frepan.64p.org/~{{$AUTHOR}}/{{$TARBALL}}
+  tweet = Released {{$DIST}}-{{$VERSION}} {{$URL}}
+
+The {tweet_url} is shortened with [WWW::Shorten::TinyURL] and
+appended to the {tweet} messsage.  The following variables are
+available for substitution in the URL and message templates:
+
+      DIST        # Foo-Bar
+      VERSION     # 1.23
+      TARBALL     # Foo-Bar-1.23.tar.gz
+      AUTHOR      # CPAN author ID (in lower case)
+      URL         # TinyURL
+
+You must be using the {UploadToCPAN} plugin for this plugin to
+determine your CPAN author ID.
 
 =end wikidoc
 
