@@ -23,7 +23,7 @@ has 'tweet' => (
 has 'tweet_url' => (
   is  => 'ro',
   isa => 'Str',
-  default => 'http://frepan.64p.org/~{{$AUTHOR}}/{{$TARBALL}}'
+  default => 'http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme',
 );
 
 
@@ -37,18 +37,22 @@ sub after_release {
     my $cpan_id = '';
     for my $plugin ( @{ $zilla->plugins_with( -Releaser ) } ) {
       if ( my $user = eval { $plugin->user } ) {
-        $cpan_id = $user;
+        $cpan_id = uc $user;
         last;
       }
     }
     confess "Can't determine your CPAN user id from a release plugin"
       unless length $cpan_id;
 
+    my $path = substr($cpan_id,0,1)."/".substr($cpan_id,0,2)."/$cpan_id";
+
     my $stash = {
       DIST => $zilla->name,
       VERSION => $zilla->version,
       TARBALL => "$tgz",
-      AUTHOR => lc $cpan_id,
+      AUTHOR_UC => $cpan_id,
+      AUTHOR_LC => lc $cpan_id,
+      AUTHOR_PATH => $path,
     };
 
     my $longurl = $self->fill_in_string($self->tweet_url, $stash);
@@ -93,13 +97,15 @@ In your {.netrc}:
 
 = DESCRIPTION
 
-This plugin will use [Net::Twitter] with the login and password in
-your {.netrc} file to send a release notice to Twitter.
+This plugin will use [Net::Twitter] with the login and password in your
+{.netrc} file to send a release notice to Twitter.  By default, it will include
+a link to your README file as extracted on a fast CPAN mirror.  This works
+very nicely with [Dist::Zilla::Plugin::ReadmeFromPod].
 
 The default configuration is as follows:
 
   [Twitter]
-  tweet_url = http://frepan.64p.org/~{{$AUTHOR}}/{{$TARBALL}}
+  tweet_url = http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme
   tweet = Released {{$DIST}}-{{$VERSION}} {{$URL}}
 
 The {tweet_url} is shortened with [WWW::Shorten::TinyURL] and
@@ -109,7 +115,9 @@ available for substitution in the URL and message templates:
       DIST        # Foo-Bar
       VERSION     # 1.23
       TARBALL     # Foo-Bar-1.23.tar.gz
-      AUTHOR      # CPAN author ID (in lower case)
+      AUTHOR_UC   # JOHNDOE
+      AUTHOR_LC   # johndoe
+      AUTHOR_PATH # J/JO/JOHNDOE
       URL         # TinyURL
 
 You must be using the {UploadToCPAN} plugin for this plugin to

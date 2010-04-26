@@ -2,6 +2,9 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+    - change url from frepan to the README on cpan.cpantesters.org;
+      this is one of the fastest hyperlinks to be available after upload
+
 0.001     2010-04-25 23:46:15 EST5EDT
 
     - first draft
