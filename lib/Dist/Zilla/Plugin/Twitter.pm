@@ -4,8 +4,9 @@ use warnings;
 package Dist::Zilla::Plugin::Twitter;
 # ABSTRACT: Twitter when you release with Dist::Zilla
 
+use Dist::Zilla 2.101160 ();
 use Carp qw/confess/;
-use Moose 0.99;
+use Moose 1;
 use WWW::Shorten::TinyURL 1 ();
 use Net::Twitter 3 ();
 use namespace::autoclean 0.09;

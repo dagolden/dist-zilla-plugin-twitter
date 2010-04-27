@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+    - turn on auto collection of prerequisites (duh)
+
 0.004     2010-04-26 17:12:38 EST5EDT
 
     - don't index sample distributin for testing
