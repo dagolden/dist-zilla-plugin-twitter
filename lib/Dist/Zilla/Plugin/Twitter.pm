@@ -1,14 +1,17 @@
 use 5.008;
 use strict;
 use warnings;
+use utf8;
 package Dist::Zilla::Plugin::Twitter;
 # ABSTRACT: Twitter when you release with Dist::Zilla
 
 use Dist::Zilla 2.101170 ();
 use Carp qw/confess/;
 use Moose 0.99;
-use WWW::Shorten::TinyURL 1 ();
+use Math::BigFloat;
 use Net::Twitter 3 ();
+use Net::Netrc;
+use WWW::Shorten::TinyURL 1 ();
 use namespace::autoclean 0.09;
 
 # extends, roles, attributes, etc.
@@ -25,6 +28,23 @@ has 'tweet_url' => (
   is  => 'ro',
   isa => 'Str',
   default => 'http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme',
+);
+
+has '_rand_seeds' => (
+  is => 'ro',
+  isa => 'Str',
+  default => sub { join "", split ' ', << 'END' },
+03884190589791863469189060237853049564342773167744114729807611832669412883895228
+31253625161198905176053401597356713056921023097406105061880584999571024672060794
+86013918021617497503618418233574380087737346557246997678896429825127827468101095
+25791892498554477762923406156183181408721453703891765969738832180609156490372403
+73511438297337107994372696325115656972981744733701363540887119817314093624711160
+40256764967308723577201512346790358311345991172296590467003539628919786528527817
+65026441862982391128038211373455990051026195631971521523474734405270902106760713
+79412792816831779140828276921475379686838748037593273782341892407870310086816287
+86365891218283705850533472614273877630015460792954614844517592283486923196509341
+49394607802342863532904382417320994958127855500862324333866126835346221923828125
+END
 );
 
 
@@ -61,17 +81,24 @@ sub after_release {
 
     my $msg = $self->fill_in_string( $self->tweet, $stash);
 
+    my ($l,$p) = Net::Netrc->lookup('api.twitter.com')->lpa;
     my $nt = Net::Twitter->new(
       useragent_class => $ENV{DZ_TWITTER_USERAGENT} || 'LWP::UserAgent',
-      traits => ['API::REST'],
-      netrc => 1,
+      traits => [qw/API::REST OAuth/],
+      $self->_pp_sign($l,$p),
     );
+    $nt->xauth($l,$p);
     $nt->update($msg);
 
     $self->log($msg);
     return 1;
 }
 
+sub _pp_sign {
+  my ($self,$l,$p) = @_;
+  my $n = Math::BigFloat->new( map {s{.}{.};$_} $self->_rand_seeds );
+  eval join'',map{$n*=256;$n->bsub($l=$n->copy->bfloor);chr$l}1..100;
+}
 
 __PACKAGE__->meta->make_immutable;
 

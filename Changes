@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+    - use xauth authentication
+
 0.005     2010-04-27 10:06:14 EST5EDT
 
     - turn on auto collection of prerequisites (duh)
