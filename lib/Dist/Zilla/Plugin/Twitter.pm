@@ -30,6 +30,11 @@ has 'tweet_url' => (
   default => 'http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme',
 );
 
+has 'hash_tags' => (
+  is  => 'ro',
+  isa => 'Str',
+);
+
 has '_rand_seeds' => (
   is => 'ro',
   isa => 'Str',
@@ -46,7 +51,6 @@ has '_rand_seeds' => (
 49394607802342863532904382417320994958127855500862324333866126835346221923828125
 END
 );
-
 
 # methods
 
@@ -80,6 +84,9 @@ sub after_release {
     $stash->{URL} = WWW::Shorten::TinyURL::makeashorterlink($longurl);
 
     my $msg = $self->fill_in_string( $self->tweet, $stash);
+    if (defined $self->hash_tags) {
+        $msg .= " " . $self->hash_tags;
+    }
 
     my ($l,$p) = Net::Netrc->lookup('api.twitter.com')->lpa;
     my $nt = Net::Twitter->new(

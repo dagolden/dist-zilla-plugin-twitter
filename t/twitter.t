@@ -21,7 +21,7 @@ is($result->exit_code, 0, "dzil release would have exited 0");
 
 my $dvname = 'DZ1-0.001';
 my $url = "http://cpan.cpantesters.org/authors/id/A/AU/AUTHORID/${dvname}.readme";
-my $msg = "[Twitter] Released $dvname $url";
+my $msg = "[Twitter] Released $dvname $url #foo";
 
 ok(
   (grep { $_ eq $msg } @{ $result->log_messages }),
