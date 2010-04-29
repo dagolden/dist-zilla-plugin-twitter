@@ -2,6 +2,9 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+    - add 'hash_tags' option to append custom tags
+      [contributed by mschout]
+
 0.006     2010-04-28 13:10:03 EST5EDT
 
     - use xauth authentication

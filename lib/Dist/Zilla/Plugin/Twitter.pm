@@ -123,6 +123,7 @@ __END__
 In your {dist.ini}:
 
   [Twitter]
+  hash_tags = #foo
 
 In your {.netrc}:
 
@@ -157,6 +158,12 @@ available for substitution in the URL and message templates:
 
 You must be using the {UploadToCPAN} plugin for this plugin to
 determine your CPAN author ID.
+
+You can use the {hash_tags} option to append hash tags (or anything,
+really) to the end of the message generated from {tweet}.
+
+  [Twitter]
+  hash-tags = #perl #cpan #foo
 
 =end wikidoc
 
