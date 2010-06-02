@@ -156,7 +156,7 @@ available for substitution in the URL and message templates:
       AUTHOR_PATH # J/JO/JOHNDOE
       URL         # TinyURL
 
-You must be using the {UploadToCPAN} plugin for this plugin to
+You must be using the {UploadToCPAN} or {FakeRelease} plugin for this plugin to
 determine your CPAN author ID.
 
 You can use the {hash_tags} option to append hash tags (or anything,
