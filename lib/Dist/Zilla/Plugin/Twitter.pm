@@ -61,7 +61,7 @@ sub after_release {
 
     my $cpan_id = '';
     for my $plugin ( @{ $zilla->plugins_with( -Releaser ) } ) {
-      if ( my $user = eval { $plugin->user } ) {
+      if ( my $user = eval { $plugin->user } || eval { $plugin->username } ) {
         $cpan_id = uc $user;
         last;
       }
