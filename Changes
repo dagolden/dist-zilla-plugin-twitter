@@ -5,6 +5,11 @@ Revision history for Dist-Zilla-Plugin-Twitter
     - document that FakeRelease may also be used
       [contributed by kent fredric]
 
+    - add some alternate sources for username since dist-zilla
+      may have renamed what gets defined by release plugins
+
+    - update dist.ini to @DAGOLDEN bundle (but still twitter it)
+
 0.007     2010-04-29 10:09:15 EST5EDT
 
     - add 'hash_tags' option to append custom tags
