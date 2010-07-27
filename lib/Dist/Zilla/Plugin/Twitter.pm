@@ -5,7 +5,7 @@ use utf8;
 package Dist::Zilla::Plugin::Twitter;
 # ABSTRACT: Twitter when you release with Dist::Zilla
 
-use Dist::Zilla 2.101170 ();
+use Dist::Zilla 4 ();
 use Carp qw/confess/;
 use Moose 0.99;
 use Math::BigFloat;
