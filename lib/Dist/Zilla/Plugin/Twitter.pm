@@ -11,7 +11,9 @@ use Moose 0.99;
 use Math::BigFloat;
 use Net::Twitter 3 ();
 use Net::Netrc;
-use WWW::Shorten::TinyURL 1 ();
+use WWW::Shorten::Simple ();  # A useful interface to WWW::Shorten
+use WWW::Shorten 3.02 ();     # For latest updates to dead services
+use WWW::Shorten::TinyURL (); # Our fallback
 use namespace::autoclean 0.09;
 
 # extends, roles, attributes, etc.
@@ -28,6 +30,12 @@ has 'tweet_url' => (
   is  => 'ro',
   isa => 'Str',
   default => 'http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme',
+);
+
+has 'url_shortener' => (
+  is    => 'ro',
+  isa   => 'Str',
+  default => 'TinyURL',
 );
 
 has 'hash_tags' => (
@@ -81,7 +89,11 @@ sub after_release {
     };
 
     my $longurl = $self->fill_in_string($self->tweet_url, $stash);
-    $stash->{URL} = WWW::Shorten::TinyURL::makeashorterlink($longurl);
+    foreach my $service (($self->url_shortener, 'TinyURL')) { # Fallback to TinyURL on errors
+      my $shortener = WWW::Shorten::Simple->new($service);
+      $self->log("Trying $service");
+      $stash->{URL} = eval { $shortener->shorten($longurl) } and last;
+    }
 
     my $msg = $self->fill_in_string( $self->tweet, $stash);
     if (defined $self->hash_tags) {
@@ -124,6 +136,7 @@ In your {dist.ini}:
 
   [Twitter]
   hash_tags = #foo
+  url_shortener = TinyURL
 
 In your {.netrc}:
 
@@ -143,8 +156,10 @@ The default configuration is as follows:
   [Twitter]
   tweet_url = http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme
   tweet = Released {{$DIST}}-{{$VERSION}} {{$URL}}
+  url_shortener = TinyURL
 
-The {tweet_url} is shortened with [WWW::Shorten::TinyURL] and
+The {tweet_url} is shortened with [WWW::Shorten::TinyURL] or
+whichever other service you choose and
 appended to the {tweet} messsage.  The following variables are
 available for substitution in the URL and message templates:
 
@@ -154,7 +169,7 @@ available for substitution in the URL and message templates:
       AUTHOR_UC   # JOHNDOE
       AUTHOR_LC   # johndoe
       AUTHOR_PATH # J/JO/JOHNDOE
-      URL         # TinyURL
+      URL         # http://tinyurl.com/...
 
 You must be using the {UploadToCPAN} or {FakeRelease} plugin for this plugin to
 determine your CPAN author ID.
