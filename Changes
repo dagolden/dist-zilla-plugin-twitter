@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+    - add 'url_shortener' option [Mike Doherty]
+
 0.009     2010-07-27 11:32:57 EST5EDT
 
     - bump Dist::Zilla prereq to 4
