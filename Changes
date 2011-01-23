@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+0.010     2011-01-23 15:53:51 EST5EDT
+
     - add 'url_shortener' option [Mike Doherty]
 
 0.009     2010-07-27 11:32:57 EST5EDT
