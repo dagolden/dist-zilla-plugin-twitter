@@ -23,13 +23,13 @@ with 'Dist::Zilla::Role::TextTemplate';
 has 'tweet' => (
   is  => 'ro',
   isa => 'Str',
-  default => 'Released {{$DIST}}-{{$VERSION}} {{$URL}}'
+  default => 'Released {{$DIST}}-{{$VERSION}}{{$TRIAL}} {{$URL}}'
 );
 
 has 'tweet_url' => (
   is  => 'ro',
   isa => 'Str',
-  default => 'http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme',
+  default => 'http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}{{$TRIAL}}.readme',
 );
 
 has 'url_shortener' => (
@@ -82,6 +82,7 @@ sub after_release {
     my $stash = {
       DIST => $zilla->name,
       VERSION => $zilla->version,
+      TRIAL   => ( $zilla->is_trial ? '-TRIAL' : '' )
       TARBALL => "$tgz",
       AUTHOR_UC => $cpan_id,
       AUTHOR_LC => lc $cpan_id,
@@ -154,8 +155,8 @@ very nicely with [Dist::Zilla::Plugin::ReadmeFromPod].
 The default configuration is as follows:
 
   [Twitter]
-  tweet_url = http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme
-  tweet = Released {{$DIST}}-{{$VERSION}} {{$URL}}
+  tweet_url = http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}{{$TRIAL}}.readme
+  tweet = Released {{$DIST}}-{{$VERSION}}{{$TRIAL}} {{$URL}}
   url_shortener = TinyURL
 
 The {tweet_url} is shortened with [WWW::Shorten::TinyURL] or
@@ -165,6 +166,7 @@ available for substitution in the URL and message templates:
 
       DIST        # Foo-Bar
       VERSION     # 1.23
+      TRIAL       # -TRIAL if is_trial, empty string otherwise.
       TARBALL     # Foo-Bar-1.23.tar.gz
       AUTHOR_UC   # JOHNDOE
       AUTHOR_LC   # johndoe
