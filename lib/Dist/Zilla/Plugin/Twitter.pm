@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 package Dist::Zilla::Plugin::Twitter;
 # ABSTRACT: Twitter when you release with Dist::Zilla
+# VERSION
 
 use Dist::Zilla 4 ();
 use Carp qw/confess/;
