@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+    - add support for -TRIAL dists [Kent Fredric]
+
 0.010     2011-01-23 15:53:51 EST5EDT
 
     - add 'url_shortener' option [Mike Doherty]
