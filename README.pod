@@ -1,0 +1,94 @@
+=pod
+
+=head1 NAME
+
+Dist::Zilla::Plugin::Twitter - Twitter when you release with Dist::Zilla
+
+=head1 VERSION
+
+version 0.011
+
+=head1 SYNOPSIS
+
+In your C<<< dist.ini >>>:
+
+   [Twitter]
+   hash_tags = #foo
+   url_shortener = TinyURL
+
+In your C<<< .netrc >>>:
+
+    machine api.twitter.com
+      login YOUR_TWITTER_USER_NAME
+      password YOUR_TWITTER_PASSWORD
+
+=head1 DESCRIPTION
+
+This plugin will use L<Net::Twitter> with the login and password in your
+C<<< .netrc >>> file to send a release notice to Twitter.  By default, it will include
+a link to your README file as extracted on a fast CPAN mirror.  This works
+very nicely with L<Dist::Zilla::Plugin::ReadmeFromPod>.
+
+The default configuration is as follows:
+
+   [Twitter]
+   tweet_url = http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}{{$TRIAL}}.readme
+   tweet = Released {{$DIST}}-{{$VERSION}}{{$TRIAL}} {{$URL}}
+   url_shortener = TinyURL
+
+The C<<< tweet_url >>> is shortened with L<WWW::Shorten::TinyURL> or
+whichever other service you choose and
+appended to the C<<< tweet >>> messsage.  The following variables are
+available for substitution in the URL and message templates:
+
+       DIST        # Foo-Bar
+       VERSION     # 1.23
+       TRIAL       # -TRIAL if is_trial, empty string otherwise.
+       TARBALL     # Foo-Bar-1.23.tar.gz
+       AUTHOR_UC   # JOHNDOE
+       AUTHOR_LC   # johndoe
+       AUTHOR_PATH # J/JO/JOHNDOE
+       URL         # http://tinyurl.com/...
+
+You must be using the C<<< UploadToCPAN >>> or C<<< FakeRelease >>> plugin for this plugin to
+determine your CPAN author ID.
+
+You can use the C<<< hash_tags >>> option to append hash tags (or anything,
+really) to the end of the message generated from C<<< tweet >>>.
+
+   [Twitter]
+   hash-tags = #perl #cpan #foo
+
+=for Pod::Coverage after_release
+
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
+
+=head1 SUPPORT
+
+=head2 Bugs / Feature Requests
+
+Please report any bugs or feature requests by email to C<bug-dist-zilla-plugin-twitter at rt.cpan.org>, or through
+the web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Twitter>. You will be automatically notified of any
+progress on the request by the system.
+
+=head2 Source Code
+
+This is open source software.  The code repository is available for
+public review and contribution under the terms of the license.
+
+L<https://github.com/dagolden/dist-zilla-plugin-twitter>
+
+  git clone https://github.com/dagolden/dist-zilla-plugin-twitter.git
+
+=head1 AUTHOR
+
+David Golden <dagolden@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2011 by David Golden.
+
+This is free software, licensed under:
+
+  The Apache License, Version 2.0, January 2004
+

@@ -1,0 +1,91 @@
+{
+   "abstract" : "Twitter when you release with Dist::Zilla",
+   "author" : [
+      "David Golden <dagolden@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112580",
+   "license" : [
+      "apache_2_0"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Dist-Zilla-Plugin-Twitter",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "examples",
+         "corpus"
+      ],
+      "package" : [
+         "DB"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.30"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : 0,
+            "Dist::Zilla" : "4",
+            "Dist::Zilla::Role::AfterRelease" : 0,
+            "Dist::Zilla::Role::TextTemplate" : 0,
+            "Math::BigFloat" : 0,
+            "Moose" : "0.99",
+            "Net::Netrc" : 0,
+            "Net::Twitter" : "3",
+            "WWW::Shorten" : "3.02",
+            "WWW::Shorten::Simple" : 0,
+            "WWW::Shorten::TinyURL" : 0,
+            "namespace::autoclean" : "0.09",
+            "perl" : "5.008",
+            "strict" : 0,
+            "utf8" : 0,
+            "warnings" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Dist::Zilla::App::Tester" : 0,
+            "Dist::Zilla::Role::Releaser" : 0,
+            "Dist::Zilla::Tester" : 0,
+            "File::Find" : 0,
+            "File::Temp" : 0,
+            "HTTP::Response" : 0,
+            "LWP::UserAgent" : 0,
+            "Params::Util" : 0,
+            "Path::Class" : 0,
+            "Sub::Exporter" : 0,
+            "Test::More" : "0.88",
+            "base" : 0
+         }
+      }
+   },
+   "provides" : {
+      "Dist::Zilla::Plugin::Twitter" : {
+         "file" : "lib/Dist/Zilla/Plugin/Twitter.pm",
+         "version" : "0.011"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-dist-zilla-plugin-twitter at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Twitter"
+      },
+      "homepage" : "https://github.com/dagolden/dist-zilla-plugin-twitter",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/dagolden/dist-zilla-plugin-twitter.git",
+         "web" : "https://github.com/dagolden/dist-zilla-plugin-twitter"
+      }
+   },
+   "version" : "0.011"
+}
+
