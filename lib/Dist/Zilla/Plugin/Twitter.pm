@@ -102,7 +102,11 @@ sub after_release {
         $msg .= " " . $self->hash_tags;
     }
 
-    my ($l,$p) = Net::Netrc->lookup('api.twitter.com')->lpa;
+    my ($l, $p);
+
+    eval {
+        ($l,$p) = Net::Netrc->lookup('api.twitter.com')->lpa;
+    } or confess "Can't get Twitter credentials from .netrc";
     my $nt = Net::Twitter->new(
       useragent_class => $ENV{DZ_TWITTER_USERAGENT} || 'LWP::UserAgent',
       traits => [qw/API::REST OAuth/],
