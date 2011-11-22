@@ -89,6 +89,9 @@ sub after_release {
       AUTHOR_LC => lc $cpan_id,
       AUTHOR_PATH => $path,
     };
+    my $module = $zilla->name;
+    $module =~ s/-/::/g;
+    $stash->{MODULE} = $module;
 
     my $longurl = $self->fill_in_string($self->tweet_url, $stash);
     foreach my $service (($self->url_shortener, 'TinyURL')) { # Fallback to TinyURL on errors
