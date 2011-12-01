@@ -15,18 +15,24 @@ use Test::DZil;
 
 $ENV{DZ_TWITTER_USERAGENT} = 'LWP::TestUA';
 
-my $result = test_dzil('corpus/DZ1', [ qw(release) ]);
+my $dist = 'DZ-Test';
+my $result = test_dzil("corpus/$dist", [ qw(release) ]);
 
 is($result->exit_code, 0, "dzil release would have exited 0");
 
-my $dvname = 'DZ1-0.001';
-my $url = "https://metacpan.org/release/AUTHORID/${dvname}/";
-my $msg = "[Twitter] Released $dvname $url #foo";
+my $module = $dist;
+$module =~ s/-/::/g;
+my $url = "http://p3rl.org/$module";
+my $msg = "[Twitter] Released $dist-v1.2.2 $url #bar";
 
 ok(
   (grep { $_ eq $msg } @{ $result->log_messages }),
   "we logged the Twitter message",
 ) or diag "STDOUT:\n" . $result->output . "STDERR:\n" . $result->error;
 
-done_testing;
+ok (
+   (grep { $_ eq '[Twitter] Trying Metamark' } @{ $result->log_messages }),
+   'Log claims we tried to use WWW::Shorten::Metamark',
+) or diag "STDOUT:\n" . $result->output . "STDERR:\n" . $result->error;
 
+done_testing;
