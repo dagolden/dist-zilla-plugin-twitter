@@ -70,7 +70,7 @@
    "provides" : {
       "Dist::Zilla::Plugin::Twitter" : {
          "file" : "lib/Dist/Zilla/Plugin/Twitter.pm",
-         "version" : "0.012"
+         "version" : "0.013"
       }
    },
    "release_status" : "stable",
@@ -86,6 +86,6 @@
          "web" : "https://github.com/dagolden/dist-zilla-plugin-twitter"
       }
    },
-   "version" : "0.012"
+   "version" : "0.013"
 }
 
