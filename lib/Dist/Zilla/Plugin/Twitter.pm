@@ -29,7 +29,7 @@ has 'tweet' => (
 has 'tweet_url' => (
   is  => 'ro',
   isa => 'Str',
-  default => 'http://cpan.cpantesters.org/authors/id/{{$AUTHOR_PATH}}/{{$DIST}}-{{$VERSION}}.readme',
+  default => 'https://metacpan.org/release/{{$AUTHOR_UC}}/{{$DIST}}-{{$VERSION}}/',
 );
 
 has 'url_shortener' => (

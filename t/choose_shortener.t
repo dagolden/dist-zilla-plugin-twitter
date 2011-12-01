@@ -20,7 +20,7 @@ my $result = test_dzil('corpus/DZ2', [ qw(release) ]);
 is($result->exit_code, 0, "dzil release would have exited 0");
 
 my $dvname = 'DZ2-0.001';
-my $url = "http://cpan.cpantesters.org/authors/id/A/AU/AUTHORID/${dvname}.readme";
+my $url = "https://metacpan.org/release/AUTHORID/${dvname}/";
 my $msg = "[Twitter] Released $dvname $url #foo";
 
 ok(
