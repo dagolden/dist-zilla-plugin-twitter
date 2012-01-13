@@ -82,6 +82,7 @@ sub after_release {
 
     my $stash = {
       DIST => $zilla->name,
+      ABSTRACT => $zilla->abstract,
       VERSION => $zilla->version,
       TRIAL   => ( $zilla->is_trial ? '-TRIAL' : '' ),
       TARBALL => "$tgz",
@@ -173,6 +174,7 @@ appended to the {tweet} messsage.  The following variables are
 available for substitution in the URL and message templates:
 
       DIST        # Foo-Bar
+      ABSTRACT    # Foo-Bar is a module that FooBars
       VERSION     # 1.23
       TRIAL       # -TRIAL if is_trial, empty string otherwise.
       TARBALL     # Foo-Bar-1.23.tar.gz
