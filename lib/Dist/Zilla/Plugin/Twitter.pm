@@ -170,7 +170,7 @@ The default configuration is as follows:
 
 The {tweet_url} is shortened with [WWW::Shorten::TinyURL] or
 whichever other service you choose and
-appended to the {tweet} messsage.  The following variables are
+appended to the {tweet} message.  The following variables are
 available for substitution in the URL and message templates:
 
       DIST        # Foo-Bar
