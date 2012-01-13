@@ -2,6 +2,9 @@ Revision history for Dist-Zilla-Plugin-Twitter
 
 {{$NEXT}}
 
+    - distribution abstract now available for use in tweets
+      [Harley Pig]
+
 0.013     2011-12-01 09:06:37 EST5EDT
 
     - changed default URL to metacpan [Mike Doherty]
