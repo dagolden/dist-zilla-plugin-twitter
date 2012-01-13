@@ -190,7 +190,7 @@ You can use the {hash_tags} option to append hash tags (or anything,
 really) to the end of the message generated from {tweet}.
 
   [Twitter]
-  hash-tags = #perl #cpan #foo
+  hash_tags = #perl #cpan #foo
 
 =end wikidoc
 
