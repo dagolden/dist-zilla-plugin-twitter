@@ -12,12 +12,15 @@ use Moose 0.99;
 use Math::BigFloat;
 use Net::Twitter 3 ();
 use Net::Netrc;
+use Path::Class;
+use Try::Tiny;
 use WWW::Shorten::Simple ();  # A useful interface to WWW::Shorten
 use WWW::Shorten 3.02 ();     # For latest updates to dead services
 use WWW::Shorten::TinyURL (); # Our fallback
 use namespace::autoclean 0.09;
 
 # extends, roles, attributes, etc.
+with 'Dist::Zilla::Role::BeforeRelease';
 with 'Dist::Zilla::Role::AfterRelease';
 with 'Dist::Zilla::Role::TextTemplate';
 
@@ -62,6 +65,20 @@ END
 );
 
 # methods
+
+sub before_release {
+    my $self = shift;
+
+    ### check to make sure we have twitter credentials...
+    try {
+        Net::Netrc->lookup('api.twitter.com')->lpa;
+    }
+    catch {
+        confess "Can't get Twitter credentials from .netrc: $_";
+    };
+
+    return;
+}
 
 sub after_release {
     my $self = shift;
@@ -137,6 +154,7 @@ __END__
 
 =for Pod::Coverage
   after_release
+  before_release
 
 =begin wikidoc
 
